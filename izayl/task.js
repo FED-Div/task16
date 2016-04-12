@@ -83,7 +83,7 @@ function renderAqiList() {
 	/**
 	 * 数据遍历，渲染表格
 	 * @param  {[type]} element [description]
-	 * @param  {[type]} index)  {		console.log( "城市" + element + '->' + aqiData[element] );		$('aqi-table').appendChild(			createTrWith3Td(				element,				aqiData[element],				createEl("button","x")			)		);	} [description]
+	 * @param  {[type]} index)  [description]
 	 * @return {[type]}         [description]
 	 */
 	Object.getOwnPropertyNames(aqiData).forEach( function(element, index) {
