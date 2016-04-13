@@ -15,7 +15,14 @@ var aqiData = {};
 function $(id) {
 	return (typeof id === 'string') ? document.getElementById(id) : id; 
 }
+/**
+ * TODO: 缓存DOM
+ * @param  {String} id DOM的ID值
+ * @return {Object}    对应ID的DOM
+ */
+function domCache(id){
 
+}
 function createEl(tagName, text, parent){
 	var el = document.createElement(tagName);
 	if ( text ){
@@ -80,6 +87,8 @@ function renderAqiList() {
 			)
 	)
 
+	// TODO : 增加一种使用字符串拼接方式，实现页面渲染
+
 	/**
 	 * 数据遍历，渲染表格
 	 * @param  {[type]} element [description]
@@ -126,6 +135,7 @@ function init() {
   // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数
   
   $("aqi-table").addEventListener("click",function (e) {
+  	// TODO : 调用命名函数来绑定回调
   	if (e.target.innerHTML === 'x') {
   		e.target.parentNode.remove();
   	}
