@@ -7,22 +7,21 @@
  * };
  */
 var aqiData = {};
+var domMap = {};
 /**
  * ID DOM操作简写
  * @param  {String} id 元素ID
- * @return {DOM Object}    DOM对象
+ * @return {DOM Object}    DOM缓存中的对象
  */
 function $(id) {
-	return (typeof id === 'string') ? document.getElementById(id) : id; 
+	// 加入DOM缓存
+	if (!domMap.hasOwnProperty(id)) {
+		domMap[id] = (typeof id === 'string') ? document.getElementById(id) : id; 
+	}
+	// 读取缓存DOM
+	return domMap[id];
 }
-/**
- * TODO: 缓存DOM
- * @param  {String} id DOM的ID值
- * @return {Object}    对应ID的DOM
- */
-function domCache(id){
 
-}
 function createEl(tagName, text, parent){
 	var el = document.createElement(tagName);
 	if ( text ){
@@ -36,7 +35,7 @@ function createEl(tagName, text, parent){
 	}
 }
 
-function createTrWith3Td(d1, d2, d3){
+/*function createTrWith3Td(d1, d2, d3){
 	if (typeof d1 === "object") {
 		var td1 = createEl("td").appendChild(d1);
 	} else {
@@ -59,7 +58,7 @@ function createTrWith3Td(d1, d2, d3){
 
 	return tr;
 }
-/**
+*//**
  * 从用户输入中获取数据，向aqiData中增加一条数据
  * 然后渲染aqi-list列表，增加新增的数据
  */
@@ -69,6 +68,15 @@ function addAqiData() {
 	aqiData[city] = value;
 }
 
+function renderTable(dataArr){
+	var html = '<tr> <td>城市</td><td>空气质量</td><td>操作</td> </tr>';
+	for (var data in dataArr) {
+		if (dataArr.hasOwnProperty(data)) {
+			html += '<tr> <td>' + data + '</td><td>' + dataArr[data] + '</td><td><button>删除</button></td> </tr>';
+		}
+	}
+	$("aqi-table").innerHTML = html;
+}
 /**
  * 渲染aqi-table表格
  */
@@ -76,35 +84,8 @@ function renderAqiList() {
 	/* 
 	| clear table */
 	$("aqi-table").innerHTML = "";
-	/*
-	| render table header*/
 
-	$("aqi-table").appendChild(
-		createTrWith3Td(
-			createEl('td', '城市'),
-			createEl('td', '空气质量'),
-			createEl('td', '操作')		
-			)
-	)
-
-	// TODO : 增加一种使用字符串拼接方式，实现页面渲染
-
-	/**
-	 * 数据遍历，渲染表格
-	 * @param  {[type]} element [description]
-	 * @param  {[type]} index)  [description]
-	 * @return {[type]}         [description]
-	 */
-	Object.getOwnPropertyNames(aqiData).forEach( function(element, index) {
-		console.log( "城市" + element + '->' + aqiData[element] );
-		$('aqi-table').appendChild(
-			createTrWith3Td(
-				element,
-				aqiData[element],
-				createEl("button","x")
-			)
-		);
-	});
+	renderTable(aqiData);
 
 }
 
@@ -136,8 +117,8 @@ function init() {
   
   $("aqi-table").addEventListener("click",function (e) {
   	// TODO : 调用命名函数来绑定回调
-  	if (e.target.innerHTML === 'x') {
-  		e.target.parentNode.remove();
+  	if (e.target.innerHTML === '删除') {
+  		e.target.parentNode.parentNode.remove();
   	}
   	return false;
   })
