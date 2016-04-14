@@ -37,20 +37,21 @@ function createEl(tagName, text, parent){
 }
 
 function createTrWith3Td(d1, d2, d3){
+  var td1,td2,td3;
 	if (typeof d1 === "object") {
-		var td1 = createEl("td").appendChild(d1);
+		td1 = createEl("td").appendChild(d1);
 	} else {
-		var td1 = createEl("td", d1);
+		td1 = createEl("td", d1);
 	}
 	if (typeof d2 === "object") {
-		var td2 = createEl("td").appendChild(d2);
+		td2 = createEl("td").appendChild(d2);
 	} else {
-		var td2 = createEl("td", d2);
+		td2 = createEl("td", d2);
 	}
 	if (typeof d3 === "object") {
-		var td3 = createEl("td").appendChild(d3);
+		td3 = createEl("td").appendChild(d3);
 	} else {
-		var td3 = createEl("td", d3);
+		td3 = createEl("td", d3);
 	}
 	var tr = document.createElement('tr');
 	tr.appendChild(td1);
@@ -85,7 +86,7 @@ function renderAqiList() {
 			createEl('td', '空气质量'),
 			createEl('td', '操作')		
 			)
-	)
+	);
 
 	// TODO : 增加一种使用字符串拼接方式，实现页面渲染
 
@@ -140,7 +141,7 @@ function init() {
   		e.target.parentNode.remove();
   	}
   	return false;
-  })
+  });
 }
 
 window.onload = init;
